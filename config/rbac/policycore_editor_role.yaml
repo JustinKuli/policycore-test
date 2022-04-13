@@ -1,0 +1,24 @@
+# permissions for end users to edit policycores.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: policycore-editor-role
+rules:
+- apiGroups:
+  - policy.open-cluster-management.io
+  resources:
+  - policycores
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - policy.open-cluster-management.io
+  resources:
+  - policycores/status
+  verbs:
+  - get

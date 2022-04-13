@@ -1,0 +1,15 @@
+domain: open-cluster-management.io
+layout:
+- go.kubebuilder.io/v3
+projectName: policycore-test
+repo: github.com/JustinKuli/policycore-test
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: open-cluster-management.io
+  group: policy
+  kind: PolicyCore
+  path: github.com/JustinKuli/policycore-test/api/v1
+  version: v1
+version: "3"

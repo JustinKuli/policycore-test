@@ -1,0 +1,20 @@
+# permissions for end users to view policycores.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: policycore-viewer-role
+rules:
+- apiGroups:
+  - policy.open-cluster-management.io
+  resources:
+  - policycores
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - policy.open-cluster-management.io
+  resources:
+  - policycores/status
+  verbs:
+  - get

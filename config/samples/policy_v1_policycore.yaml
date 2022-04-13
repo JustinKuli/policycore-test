@@ -1,0 +1,6 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyCore
+metadata:
+  name: policycore-sample
+spec:
+  # TODO(user): Add fields here
