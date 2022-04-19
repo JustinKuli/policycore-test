@@ -42,10 +42,10 @@ func (o RelatedObject) SortString() string {
 		o.Object.Metadata.Name + o.Reason
 }
 
-//+kubebuilder:rbac:groups=core,resources=namespaces,verbs=get;list;watch
-
 // GetNamespaces fetches all namespaces in the cluster and returns a list of the
-// namespaces that match the NamespaceSelector.
+// namespaces that match the NamespaceSelector. The client.Reader needs access
+// for viewing namespaces, like the access given by this kubebuilder tag:
+// `//+kubebuilder:rbac:groups=core,resources=namespaces,verbs=get;list;watch`
 func (sel NamespaceSelector) GetNamespaces(ctx context.Context, r client.Reader) ([]string, error) {
 	matchingNamespaces := make([]string, 0)
 
@@ -103,14 +103,14 @@ func (sel NamespaceSelector) matches(namespaces []string) ([]string, error) {
 	return matchingNamespaces, nil
 }
 
-//+kubebuilder:rbac:groups="",resources=events,verbs=create;patch
-
 // RecordComplianceEvent creates an event on the "parent" policy of the given
 // object (found through ownerReferences, which is set by the policy framework)
 // which can be recognized by the policy framework to update the parent policy's
 // status. This is the way that compliance information gets sent to the hub.
 // The provided message will be prepended with "Compliant; " or "NonCompliant; "
-// as required by the policy framework.
+// as required by the policy framework. The record.EventRecorder needs access to
+// create and update events, like the access given by this kubebuilder tag:
+// `//+kubebuilder:rbac:groups="",resources=events,verbs=create;patch`
 func RecordComplianceEvent(r record.EventRecorder, policy ObjectWithCompliance, msg string) {
 	if len(policy.GetOwnerReferences()) != 0 {
 		ownerRef := policy.GetOwnerReferences()[0]
