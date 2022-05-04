@@ -115,8 +115,11 @@ func reconcileMetric(r client.Reader, gvk schema.GroupVersionKind, gauge *promet
 		}
 
 		// TODO: Can we use policyCore.ObjectWithCompliance instead of Unstructured?
-		compliance, ok := u.Object["status"].(map[string]interface{})["compliant"].(string)
-		if !ok {
+		compliance, ok, err := unstructured.NestedString(u.Object, "status", "compliant")
+		if !ok || err != nil {
+			if err != nil {
+				log.Error(err, "Error while getting compliance")
+			}
 			log.V(1).Info("Couldn't get compliance, using policycore.UnknownCompliancy")
 			compliance = string(policycore.UnknownCompliancy)
 		}
